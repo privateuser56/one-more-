@@ -1,10 +1,9 @@
 name: Auto-update model_predictions.csv
 
 on:
-  workflow_dispatch:  # 👈 allows manual trigger
   schedule:
-    - cron: '0 13 * * *'  # 👈 runs daily at 9:00 AM EST
-  workflow_dispatch:
+    - cron: '0 13 * * *'  # Runs daily at 9:00 AM EST
+  workflow_dispatch:      # Allows manual triggering from GitHub UI
 
 jobs:
   update-model:
@@ -36,4 +35,4 @@ jobs:
         git add data/model_predictions.csv
         git commit -m "🔁 Daily model_predictions.csv update"
         git push
-      continue-on-error: true  # In case there's no change
+      continue-on-error: true
