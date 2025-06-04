@@ -1,1 +1,38 @@
+name: Auto-update model_predictions.csv
 
+on:
+  schedule:
+    - cron: '0 13 * * *'  # Runs daily at 9:00 AM EST (13:00 UTC)
+  workflow_dispatch:
+
+jobs:
+  update-model:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: ⬇️ Checkout repo
+      uses: actions/checkout@v3
+
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.10
+
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: 🔁 Run scraper + model
+      run: |
+        python scraper.py
+        python probes_model.py
+
+    - name: ✅ Commit updated model_predictions.csv
+      run: |
+        git config --global user.name "auto-bot"
+        git config --global user.email "auto-bot@example.com"
+        git add data/model_predictions.csv
+        git commit -m "🔁 Daily model_predictions.csv update"
+        git push
+      continue-on-error: true  # In case there's no change
