@@ -1,0 +1,1 @@
+Instructions: install requirements, run `streamlit run launch_app.py`, props will auto-update.
