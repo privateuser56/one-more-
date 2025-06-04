@@ -1,8 +1,9 @@
 name: Auto-update model_predictions.csv
 
 on:
+  workflow_dispatch:  # 👈 allows manual trigger
   schedule:
-    - cron: '0 13 * * *'  # Runs daily at 9:00 AM EST (13:00 UTC)
+    - cron: '0 13 * * *'  # 👈 runs daily at 9:00 AM EST
   workflow_dispatch:
 
 jobs:
